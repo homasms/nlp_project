@@ -74,6 +74,9 @@ def masnavi():
             pass
         driver.quit()
 
+def main():
+    masnavi()
+    divan_shams()
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
@@ -83,5 +86,7 @@ if __name__ == "__main__":
 
     if args.m:
         masnavi()
-    if args.s:
+    elif args.s:
         divan_shams()
+    else:
+        main()
