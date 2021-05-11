@@ -3,6 +3,7 @@ from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 import csv
+import os
 import argparse
 
 # def delete_half_space(poem):
@@ -11,9 +12,9 @@ import argparse
 #    return poem
 
 
-def addToFile(num, poem):
+def addToFile(num, poem, which_book):
     try:
-        with open(f"{num}.csv", "a", encoding="utf-8") as csvfile:
+        with open(f"..\\data\\raw\\{which_book}\\{num}.csv", "a", encoding="utf-8") as csvfile:
             csv_writer = csv.writer(csvfile,
                                     delimiter=",",
                                     quotechar='"',
@@ -36,10 +37,14 @@ def extract_poem(title, elements_m1, elements_m2):
 
 
 def divan_shams():
+    if not os.path.exists("../data/raw"):
+        os.mkdir("../data/raw")
+    if not os.path.exists("../data/raw/divan_shams"):
+        os.mkdir("../data/raw/divan_shams")
+
     opts = Options()
     opts.set_headless()
-
-    for i in range(200, 201):
+    for i in range(1, 306):
         print(i)
         driver = Chrome(executable_path="e:/chromedriver89", options=opts)
         driver.get(f"https://ganjoor.net/moulavi/shams/ghazalsh/sh{i}/")
@@ -48,7 +53,7 @@ def divan_shams():
             elements_m1 = driver.find_elements_by_class_name("m1")
             elements_m2 = driver.find_elements_by_class_name("m2")
             poem = extract_poem(header, elements_m1, elements_m2)
-            addToFile(i, poem)
+            addToFile(i, poem, "divan_shams")
         except (NoSuchElementException):
             print("got exeption")
             pass
@@ -56,10 +61,18 @@ def divan_shams():
 
 
 def masnavi():
+    if not os.path.exists("../data/raw"):
+        os.mkdir("../data/raw")
+    if not os.path.exists("../data/raw/masnavi"):
+        os.mkdir("../data/raw/masnavi")
+    if not os.path.exists("../data/raw/masnavi/daftar-aval"):
+        os.mkdir("../data/raw/masnavi/daftar-aval")
+    if not os.path.exists("../data/raw/masnavi/daftar-dovom"):
+        os.mkdir("../data/raw/masnavi/daftar-dovom")
+
     opts = Options()
     opts.set_headless()
-
-    for i in range(1, 173):
+    for i in range(1, 1):
         print(i)
         driver = Chrome(executable_path="e:/chromedriver89", options=opts)
         driver.get(f"https://ganjoor.net/moulavi/masnavi/daftar1/sh{i}/")
@@ -68,7 +81,24 @@ def masnavi():
             elements_m1 = driver.find_elements_by_class_name("m1")
             elements_m2 = driver.find_elements_by_class_name("m2")
             poem = extract_poem(header, elements_m1, elements_m2)
-            addToFile(i, poem)
+            addToFile(i, poem, "masnavi/daftar-aval")
+        except (NoSuchElementException):
+            print("got exeption")
+            pass
+        driver.quit()
+        print("daftar aval finished.")
+        print("starting daftar dovom...")
+
+    for i in range(1, 116):
+        print(i)
+        driver = Chrome(executable_path="e:/chromedriver89", options=opts)
+        driver.get(f"https://ganjoor.net/moulavi/masnavi/daftar2/sh{i}/")
+        try:
+            header = driver.find_element_by_tag_name('h2').text
+            elements_m1 = driver.find_elements_by_class_name("m1")
+            elements_m2 = driver.find_elements_by_class_name("m2")
+            poem = extract_poem(header, elements_m1, elements_m2)
+            addToFile(i, poem, "masnavi/daftar-dovom")
         except (NoSuchElementException):
             print("got exeption")
             pass
