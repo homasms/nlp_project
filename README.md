@@ -4,9 +4,9 @@
 This project aims to analyze the poetic works of Maulana Rumi, specifically comparing two of his notable books, Masnavi and Divan-e Shams. The analysis utilizes NLP tools and methods to uncover patterns and nuances within the poetry.  
 
 **Data Gathering:**  
-Markup : * To gather data, run crawling.py.  
-         * To obtain data for Masnavi, use the -m argument.  
-         * To collect data for Divan-e Shams, use the -s argument.  
+* To gather data, run crawling.py.  
+* To obtain data for Masnavi, use the -m argument.  
+* To collect data for Divan-e Shams, use the -s argument.  
 
 **Word Breaking:**  
 Run without argument to execute the entire code.  
